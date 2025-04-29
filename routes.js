@@ -3,23 +3,19 @@ const route = express.Router();
 
 //IMPORTANDO O MODULO CONTROLLER HOME
 const homeController = require('./src/controllers/homeController')
-
+//CONTROLER
+const loginController = require('./src/controllers/loginController')
 //IMPORTANDO O MODULO CONTROLLER CONTATO
-
-const contatoController = require('./src/controllers/contatoController')
-
 
 //ROTAS DA HOME
 
-route.get ('/' , homeController.paginaInicial);
+route.get ('/' , homeController.index);
 
-route.post('/' , homeController.paginaPost);
+// ROTAS DE LOGIN
 
-//ROTAS DE CONTATO
+route.get('/login/index', loginController.index);
 
-route.get ('/faleconosco' , contatoController.contato);
-
-//EXPORTANDO O ROUTES
+route.post('/login/register' , loginController.register)
 
 module.exports = route;
 

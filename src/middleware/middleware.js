@@ -12,16 +12,17 @@ exports.meuMiddleware = (req, res, next) => {
 };
 
 exports.middlewareGlobal = (req, res, next) => {
+    res.locals.errors = req.flash('errors');
     next();
 };
 
 //CHECANDO SE O TOKEN É VALIDO, SE NÃO FOR, ERRO 404
 exports.checkCsrfError = (err, req, res, next) => {
-    if (err && err.code === 'EBADCSRFTOKEN') {
-        console.error('Erro de CSRF:', err);  // Log completo do erro
+    if (err) {
+    
         return res.render('404');
       }
-      next(err);  // Passa o erro adiante
+      next();  // Passa o erro adiante
     };
 
 //CRIANDO UM MIDDLEWARE PARA DISPONIBILIZAR O TOKEN E DISPONIVEL NAS VIEWS (index.ejs)
