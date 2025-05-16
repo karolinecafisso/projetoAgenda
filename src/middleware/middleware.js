@@ -1,18 +1,11 @@
 exports.meuMiddleware = (req, res, next) => {
-    
-    
-    if(req.body.cliente) {
-        req.body.cliente = req.body.cliente.replace('Cafisso' , 'NÂO USE CAFISSO');
-        console.log();
-        console.log(`Vi que você postou ${req.body.cliente}`);
-        console.log();
-    }
-    
     next();
 };
 
 exports.middlewareGlobal = (req, res, next) => {
     res.locals.errors = req.flash('errors');
+    res.locals.success = req.flash('success');
+    res.locals.user = req.session.user;
     next();
 };
 
@@ -29,4 +22,15 @@ exports.checkCsrfError = (err, req, res, next) => {
 exports.csrfMiddleware = (req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
+};
+
+//CHECANDO SE EXISTE UM USUÁRIO NA SESSÃO
+
+exports.loginRequired = (req, res, next) => {
+    if(!req.session.user) {
+        req.flash('errors' , 'Você precisa fazer login para continuar.');
+        req.session.save( () => res.redirect('/'));
+        return;
+    }  
+        next();
 };

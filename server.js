@@ -77,3 +77,11 @@ app.on('pronto' , ()=> {
     });
 })
 
+
+app.use((req, res,next) => {
+    res.setHeader(
+        "Content-Security-Policy",
+        "script-src 'self' https://cdn.jsdelivr.net"
+    );
+    next();
+});
